@@ -1,0 +1,18 @@
+version: '3.7'
+services:
+  php-fpm:
+    build: ./php-fpm
+    ports:
+      - '9000:9000'
+    volumes:
+      - ./php-fpm/app:/var/www/html:cached
+    image: sample-ecs-php-fpm:0.0.1
+    container_name: sample-ecs-php-fpm
+  nginx:
+    build: ./nginx
+    ports:
+      - '80:80'
+    links:
+      - php-fpm
+    image: sample-ecs-nginx:0.0.1
+    container_name: sample-ecs-nginx
